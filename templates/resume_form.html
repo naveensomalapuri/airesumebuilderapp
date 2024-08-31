@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes colorChange {
+            0%, 100% { color: #FFFFFF; } /* White */
+            25% { color: #EF4444; } /* Red */
+            50% { color: #10B981; } /* Green */
+            75% { color: #F59E0B; } /* Amber */
+        }
+        @keyframes vibrate-motion {
+            0% { transform: translateX(0); }
+            10% { transform: translateX(-4px); }
+            20% { transform: translateX(4px); }
+            30% { transform: translateX(-4px); }
+            40% { transform: translateX(4px); }
+            50% { transform: translateX(-4px); }
+            60% { transform: translateX(4px); }
+            70% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+            90% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+        .animate-color {
+            animation: colorChange 5s infinite;
+        }
+        .vibrate-motion {
+            animation: vibrate-motion 0.6s linear infinite;
+        }
+        .logo-font {
+            font-family: 'Merienda', cursive;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col items-center">
+
+    <!-- Navbar -->
+    <nav class="w-full bg-navy-blue-800 shadow-lg fixed top-0 left-0 z-50">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <!-- Animated Logo -->
+            <div class="flex items-center">
+                <span class="text-3xl font-bold logo-font animate-bounce animate-color">AI Resume Builder</span>
+            </div>
+            <!-- Navigation Links -->
+            <ul class="flex space-x-8">
+                <li><a href="/" class="text-black font-medium hover:text-gray-200 transition-colors duration-300 vibrate-motion">Home</a></li>
+                <li><a href="/about" class="text-black font-medium hover:text-gray-200 transition-colors duration-300 vibrate-motion">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container mx-auto p-6 mt-24 bg-white shadow-lg rounded-lg max-w-lg">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Create a Resume</h1>
+        <form action="/generate_resume" method="post" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+                <div class="md:w-1/2">
+                    <label for="name" class="block text-lg font-medium text-gray-700">Name:</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div class="md:w-1/2 flex items-center">
+                    <p class="text-gray-500 text-sm">Example: John Doe</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+                <div class="md:w-1/2">
+                    <label for="bio" class="block text-lg font-medium text-gray-700">Bio:</label>
+                    <textarea id="bio" name="bio" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                </div>
+                <div class="md:w-1/2 flex items-center">
+                    <p class="text-gray-500 text-sm">Example: A highly motivated individual with a passion for technology and innovation.</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+                <div class="md:w-1/2">
+                    <label for="job_description" class="block text-lg font-medium text-gray-700">Job Description:</label>
+                    <textarea id="job_description" name="job_description" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                </div>
+                <div class="md:w-1/2 flex items-center">
+                    <p class="text-gray-500 text-sm">Example: Seeking a software engineer to develop and maintain high-quality software solutions.</p>
+                </div>
+            </div>
+            
+            <div class="flex justify-center">
+                <input type="submit" value="Generate Resume" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-lg transform hover:scale-105 transition-transform duration-300">
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

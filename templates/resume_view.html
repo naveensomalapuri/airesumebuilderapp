@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes colorChange {
+            0%, 100% { color: #FFFFFF; }
+            25% { color: #EF4444; }
+            50% { color: #10B981; }
+            75% { color: #F59E0B; }
+        }
+        .animate-color {
+            animation: colorChange 5s infinite;
+        }
+        .logo-font {
+            font-family: 'Merienda', cursive;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+
+    <!-- Navbar -->
+    <nav class="w-full bg-navy-blue-800 shadow-lg fixed top-0 left-0 z-50">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center">
+                <span class="text-3xl font-bold logo-font animate-color">AI Resume Builder</span>
+            </div>
+            <ul class="flex space-x-8">
+                <li><a href="/" class="text-white font-medium hover:text-gray-300 transition-colors duration-300">Home</a></li>
+                <li><a href="/about" class="text-white font-medium hover:text-gray-300 transition-colors duration-300">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Resume Content -->
+    <div class="container mx-auto p-6 mt-24 bg-white shadow-lg rounded-lg max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ resume.name }}</h1>
+        <p class="text-gray-700 mb-4">{{ resume.bio }}</p>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Job Description</h2>
+        <p class="text-gray-700 mb-4">{{ resume.job_description }}</p>
+        
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h2>
+        <ul class="list-disc list-inside mb-4">
+            <li><strong>Phone:</strong> {{ resume.generated_resume.contact_information.phone_number }}</li>
+            <li><strong>Email:</strong> {{ resume.generated_resume.contact_information.email_address }}</li>
+            <li><strong>LinkedIn:</strong> <a href="https://{{ resume.generated_resume.contact_information.linkedin_profile }}" class="text-blue-600 hover:underline">{{ resume.generated_resume.contact_information.linkedin_profile }}</a></li>
+            <li><strong>Address:</strong> {{ resume.generated_resume.contact_information.physical_address }}</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Career Objective</h2>
+        <p class="text-gray-700 mb-4">{{ resume.generated_resume.objective_or_summary.career_objective }}</p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Work Experience</h2>
+        <ul class="list-disc list-inside mb-4">
+            {% for experience in resume.generated_resume.work_experience %}
+            <li>
+                <strong>{{ experience.company_name }} - {{ experience.job_title }} ({{ experience.employment_dates }})</strong>
+                <ul class="list-disc list-inside">
+                    {% for responsibility in experience.key_responsibilities %}
+                    <li>{{ responsibility }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="list-disc list-inside">
+                    {% for achievement in experience.achievements %}
+                    <li>{{ achievement }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Education</h2>
+        <ul class="list-disc list-inside mb-4">
+            {% for education in resume.generated_resume.education %}
+            <li>
+                <strong>{{ education.school_name }} - {{ education.degree }} ({{ education.graduation_date }})</strong>
+                <ul class="list-disc list-inside">
+                    {% for course in education.relevant_coursework %}
+                    <li>{{ course }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Skills</h2>
+        <ul class="list-disc list-inside mb-4">
+            <li><strong>Technical Skills:</strong> {{ resume.generated_resume.skills.technical_skills | join(', ') }}</li>
+            <li><strong>Soft Skills:</strong> {{ resume.generated_resume.skills.soft_skills | join(', ') }}</li>
+            <li><strong>Languages:</strong> {{ resume.generated_resume.skills.languages | join(', ') }}</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Hobbies and Interests</h2>
+        <ul class="list-disc list-inside mb-4">
+            {% for hobby in resume.generated_resume.hobbies_and_interests %}
+            <li>{{ hobby }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Languages</h2>
+        <ul class="list-disc list-inside mb-4">
+            {% for language in resume.generated_resume.languages %}
+            <li>{{ language.language_name }} ({{ language.proficiency_level }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Back Button -->
+    <div class="fixed bottom-8 right-8">
+        <a href="/" class="bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">Back to List</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - {{ resume.generated_resume.name }}</title>
+    <meta name="author" content="{{ resume.generated_resume.name }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="font-sans bg-gray-100">
+    <!-- Header Section -->
+    <div class="bg-blue-900 text-white py-6 text-center">
+        <h1 class="text-5xl font-bold">{{ resume.generated_resume.name }}</h1>
+        {% if resume.generated_resume.work_experience %}
+        <p class="text-xl mt-2 font-semibold">{{ resume.generated_resume.work_experience[0].job_title }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-full mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Left Column with Contact and Skills -->
+            <div class="bg-blue-50 p-4 rounded-lg shadow-md">
+                <!-- Contact Information -->
+                <h2 class="text-xl font-semibold text-blue-900 mb-4">
+                    <i class="fas fa-address-book mr-2"></i> Contact Information
+                </h2>
+                <p><strong>Phone:</strong> {{ resume.generated_resume.contact_information.phone_number }}</p>
+                <p><strong>Email:</strong> <a href="mailto:{{ resume.generated_resume.contact_information.email_address }}"
+                        class="text-blue-500 hover:underline">{{ resume.generated_resume.contact_information.email_address }}</a></p>
+                <p><strong>LinkedIn:</strong> <a href="https://{{ resume.generated_resume.contact_information.linkedin_profile }}"
+                        class="text-blue-500 hover:underline">{{ resume.generated_resume.contact_information.linkedin_profile }}</a></p>
+                <p><strong>Address:</strong> {{ resume.generated_resume.contact_information.physical_address }}</p>
+
+                <!-- Skills -->
+                <h2 class="text-xl font-semibold text-blue-900 mt-6 mb-4">
+                    <i class="fas fa-cogs mr-2"></i> Skills
+                </h2>
+                <ul class="list-disc list-inside pl-4">
+                    {% for skill in resume.generated_resume.skills.technical_skills %}
+                    <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Languages -->
+                <h2 class="text-xl font-semibold text-blue-900 mt-6 mb-4">
+                    <i class="fas fa-language mr-2"></i> Languages
+                </h2>
+                {% for language in resume.generated_resume.languages %}
+                <p>{{ language.language_name }}: {{ language.proficiency_level }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Right Column with Content -->
+            <div class="col-span-2">
+                <!-- Career Objective -->
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4">
+                    <i class="fas fa-bullseye mr-2"></i> Career Objective
+                </h2>
+                <p class="text-gray-700">{{ resume.generated_resume.objective_or_summary.career_objective }}</p>
+
+                <!-- Education -->
+                <h2 class="text-2xl font-semibold text-blue-900 mt-6 mb-4">
+                    <i class="fas fa-graduation-cap mr-2"></i> Education
+                </h2>
+                <div class="text-gray-700">
+                    {% for edu in resume.generated_resume.education %}
+                    <h3 class="text-xl font-semibold">{{ edu.school_name }}</h3>
+                    <p>{{ edu.degree }}, {{ edu.graduation_date }}</p>
+                    <p><strong>Relevant Coursework:</strong> {% for course in edu.relevant_coursework %}{{ course }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Work Experience -->
+                <h2 class="text-2xl font-semibold text-blue-900 mt-6 mb-4">
+                    <i class="fas fa-briefcase mr-2"></i> Work Experience
+                </h2>
+                <div class="text-gray-700">
+                    {% for exp in resume.generated_resume.work_experience %}
+                    <h3 class="text-xl font-semibold">{{ exp.company_name }}</h3>
+                    <p><strong>Job Title:</strong> {{ exp.job_title }}</p>
+                    <p><strong>Employment Dates:</strong> {{ exp.employment_dates }}</p>
+                    <p><strong>Key Responsibilities:</strong> {% for responsibility in exp.key_responsibilities %}{{ responsibility }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                    <p><strong>Achievements:</strong> {% for achievement in exp.achievements %}{{ achievement }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Projects -->
+                <h2 class="text-2xl font-semibold text-blue-900 mt-6 mb-4">
+                    <i class="fas fa-project-diagram mr-2"></i> Projects
+                </h2>
+                <div class="text-gray-700">
+                    {% for project in resume.generated_resume.projects %}
+                    <h3 class="text-xl font-semibold">{{ project.project_name }}</h3>
+                    <p><strong>Description:</strong> {{ project.description }}</p>
+                    <p><strong>Technologies Used:</strong> {% for tech in project.technologies_used %}{{ tech }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                    <p><strong>Project Link:</strong> <a href="https://{{ project.project_link }}" class="text-blue-500 hover:underline">{{ project.project_link }}</a></p>
+                    {% endfor %}
+                </div>
+
+                <!-- Hobbies and Interests -->
+                <h2 class="text-2xl font-semibold text-blue-900 mt-6 mb-4">
+                    <i class="fas fa-heart mr-2"></i> Hobbies and Interests
+                </h2>
+                <p class="text-gray-700">{% for hobby in resume.generated_resume.hobbies_and_interests %}{{ hobby }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
